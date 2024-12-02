@@ -1,0 +1,104 @@
+import os
+AllowedVehiclesList = ['Ford F-150', 'Cheverlet Silverado', 'Tesla Cybertruck', 'Toyota Tundra', 'Nissan Titan', 'Rivian R1T','Ram 1500']
+
+if not os.path.isfile("Projectfile.txt"):
+    with open("Projectfile.txt", "x") as db:
+         db.close()
+
+with open("Projectfile.txt", "w") as db:
+    db.write(str(AllowedVehiclesList))
+    db.close()
+
+with open("Projectfile.txt") as db:
+    print(db.readlines())
+    db.close()
+
+
+def menu():
+    print("*******************************")
+    print("AutoCountry Vehicle Finder v0.4")
+    print("*******************************")
+    print("Please Enter the following number below from the following menu:")
+    print("1. PRINT all Authorized Vehicles")
+    print("2. SEARCH all Authorized Vehicle")
+    print("3. ADD Authorized Vehicle")
+    print("4. DELETE Authorized Vehicle")
+    print("5. Exit")
+    print("******************************")
+
+def print_vehicles():
+    print("The AutoCountry sales manager has authorized the purchase and selling of the following vehicles: ")
+    with open("Projectfile.txt", 'r') as file:
+        vehicles = file.readlines()
+        for vehicle in vehicles:
+            print(vehicle.strip())
+    print()
+
+def search_vehicle():
+    search = input("Please Enter the full Vehicle Name: ")
+    with open("Projectfile.txt", 'r') as file:
+        vehicles = file.readlines()
+        if search in vehicles:
+            print(f"{search} is an authorized vehicle.")
+        else:
+            print(f"{search} is not an authorized vehicle, if you recieved this in error please check the spelling and try again.")
+    print()
+
+def add_vehicle():
+    new_vehicle = input("Please Enter the full Vehicle name you would like to add: ")
+    with open("Projectfile.txt", 'r') as file:
+        vehicles = file.readlines()
+    if new_vehicle not in vehicles:
+        with open("Projectfile.txt", 'a') as file:
+            file.write(new_vehicle)
+        print(f"{new_vehicle} has been added to the authorized vehicles list.")
+    print()
+
+def delete_vehicle():
+    RemovaL = input("Please Enter the full Vehicle name you woule like to REMOVE: ")
+    with open("Projectfile.txt", 'r') as file:
+        vehicles = file.readlines()
+    if RemovaL in vehicles:
+        confirm = input(f"Are you sure you want to remove {RemovaL} from the Authorized Vehicles List?")
+        if confirm.lower() == 'yes':
+            with open("Projectfile.txt", 'w') as file:
+                for vehicle in vehicles:
+                    if vehicle.strip() != RemovaL:
+                        file.write(vehicle)
+            print(f"You have Removed{RemovaL} as an authorized vehicle.")
+    print()
+
+def main():
+    while True:
+        menu()
+        choice = input("Enter here: ")
+        if choice == '1':
+            print_vehicles()
+        elif choice == '2':
+            search_vehicle()
+        elif choice == '3':
+            add_vehicle()
+        elif choice == '4':
+            delete_vehicle()
+        elif choice == '5':
+            print("Thank you for using the AutoCountry Vehicle Finder, good-bye!")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
